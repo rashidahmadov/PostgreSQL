@@ -1,0 +1,102 @@
+Lesson 1 AGGREGATE FUNCTIONS
+Question 1: How many official languages are there?
+TABLE: country LANGUAGE
+SELECT count("language") FROM countrylanguage    
+
+-- Question 2: What is the average life expectancy in the world?
+-- Table: Country
+-- SELECT * from public.country;
+-- SELECT avg( lifeexpectancy ) from public.country 
+-- 
+-- Question 3: What is the average population of cities in the Netherlands?
+-- Table: City
+-- select avg( population ) from public.city 
+-- where countrycode = 'NLD' 
+-- 
+-- 
+-- How many cities are in the districts of Zuid-Holland, Noord-Brabant and Utrecht?
+-- SELECT COUNT(*) FROM public.city 
+-- WHERE district IN ('Zuid-Holland', 'Noord-Brabant', 'Utrecht');
+-- 
+-- Question: Can I get a list of distinct life expectancy ages?
+-- select DISTINCT lifeexpectancy from public.country 
+-- 
+-- SELECT COUNT(DISTINCT LANGUAGE) FROM public.countrylanguage
+-- WHERE isofficial = TRUE;
+-- 
+-- SELECT AVG(distinct lifeexpectancy) FROM public.country; 
+-- 
+-- SELECT AVG(population) FROM public.city
+-- WHERE countrycode = 'NLD';
+-- 
+-- SELECT COUNT(NAME) FROM public.city
+-- WHERE district IN('Zuid-Holland', ' Noord-Brabant', 'Utrecht');
+-- 
+-- SELECT DISTINCT NAME FROM public.country
+-- WHERE lifeexpectancy BETWEEN 20 AND 50; 
+-- 
+-- Lesson 3
+-- joins
+-- show me each country and its language
+-- SELECT name, LANGUAGE FROM public.country AS c 
+-- INNER JOIN public.countrylanguage AS cl
+-- ON c.code = cl.countrycode; 
+-- 
+-- SELECT DISTINCT district, id from public.city group by district, id
+-- 
+-- Lesson 5 and 6
+-- Find the percentage of the world's population that lives on each continent
+-- SELECT DISTINCT continent, ROUND((SUM(population) OVER(PARTITION BY continent)::FLOAT / SUM(population) OVER()) * 100) || '%' AS percentage 
+-- FROM public.country
+-- GROUP BY continent, population;
+-- 
+-- conditionals
+-- Calculate the total area of countries that have a population of over 50 million
+-- SELECT 
+-- SUM(case
+--    WHEN population > 50000000 THEN surfacearea
+--    ELSE surfacearea
+--    END)
+-- from public.country; 
+-- 
+-- Lesson 7
+-- conditionals
+-- SELECT 
+-- SUM(case
+--     WHEN population > 50000000 THEN surfacearea
+--     ELSE surfacearea
+--     END)
+-- from public.country; 
+-- 
+-- SELECT "country"."name", population
+-- FROM country
+-- WHERE continent = 'Europe'
+-- order by population DESC
+-- LIMIT 1 OFFSET 1;
+-- 
+-- SELECT SUM(transaction_amount) AS total_transactions
+-- FROM orders
+-- WHERE customer_id IN (
+--     SELECT DISTINCT customer_id
+--     FROM orders
+--     ORDER BY customer_id
+--     LIMIT 100
+-- ); 
+-- 
+-- SELECT 
+--     c.continent, 
+--     SUM(c.population) OVER (PARTITION BY c.continent) AS continent_population, 
+--     SUM(c.population) OVER () AS world_population
+-- FROM country AS c
+-- INNER JOIN city AS ct ON ct.countrycode = c.code;  
+-- 
+-- Lesson 4
+-- Group By
+
+--10) What is the total population of each continent and the world?
+-- select continent, sum(population) from country
+-- group by 
+--     grouping SETS(
+--     (continent),
+--     ()
+--     )
