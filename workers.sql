@@ -1,8 +1,3 @@
- --Show the salary for each employee and their name
---SELECT first_name, last_name, salary FROM public.employees AS e 
---Inner JOIN public.salaries AS s 
---ON e.emp_no = s.emp_no;  
-
 -- select first_name, salary from employees
 -- inner join salaries using(emp_no) 
 
